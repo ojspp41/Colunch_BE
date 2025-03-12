@@ -17,7 +17,7 @@ const seedUsers = async () => {
         kakaoId: "3954203015",
         admissionYear: "21",
         age: "22",
-        hobby: ["reading"],
+        hobby: ["독서"], // ✅ 1개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
@@ -32,7 +32,7 @@ const seedUsers = async () => {
         kakaoId: "123456789",
         admissionYear: "21",
         age: "23",
-        hobby: ["gaming"],
+        hobby: ["롤", "배틀그라운드"], // ✅ 2개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
@@ -47,7 +47,7 @@ const seedUsers = async () => {
         kakaoId: "987654321",
         admissionYear: "20",
         age: "22",
-        hobby: ["sports"],
+        hobby: ["축구", "농구", "배드민턴"], // ✅ 3개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
@@ -62,7 +62,7 @@ const seedUsers = async () => {
         kakaoId: "567890123",
         admissionYear: "22",
         age: "24",
-        hobby: ["music"],
+        hobby: ["인디음악", "락", "K-팝", "RnB"], // ✅ 4개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
@@ -77,7 +77,7 @@ const seedUsers = async () => {
         kakaoId: "112233445",
         admissionYear: "21",
         age: "22",
-        hobby: ["cooking"],
+        hobby: ["요리"], // ✅ 1개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
@@ -92,7 +92,7 @@ const seedUsers = async () => {
         kakaoId: "998877665",
         admissionYear: "20",
         age: "21",
-        hobby: ["hiking"],
+        hobby: ["등산", "캠핑"], // ✅ 2개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
@@ -107,7 +107,7 @@ const seedUsers = async () => {
         kakaoId: "443322110",
         admissionYear: "19",
         age: "25",
-        hobby: ["traveling"],
+        hobby: ["해외여행", "국내여행", "드라이브"], // ✅ 3개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
@@ -122,7 +122,7 @@ const seedUsers = async () => {
         kakaoId: "776655443",
         admissionYear: "21",
         age: "22",
-        hobby: ["swimming"],
+        hobby: ["수영", "러닝", "테니스", "클라이밍"], // ✅ 4개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
@@ -137,7 +137,7 @@ const seedUsers = async () => {
         kakaoId: "334455667",
         admissionYear: "22",
         age: "23",
-        hobby: ["watching movies"],
+        hobby: ["영화"], // ✅ 1개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
@@ -152,7 +152,7 @@ const seedUsers = async () => {
         kakaoId: "665544332",
         admissionYear: "20",
         age: "21",
-        hobby: ["drawing"],
+        hobby: ["피아노", "기타"], // ✅ 2개
         isFirstLogin: false,
         isFirstMatch: true,
         matchedUsers: [],
