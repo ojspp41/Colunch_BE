@@ -22,6 +22,7 @@ router.get(
       httpOnly: false,  // 클라이언트에서 JS로 접근 불가능 (보안 강화)
       secure: true,  // 로컬 개발 환경에서는 false, 배포 환경에서는 true (HTTPS 필요)
       sameSite: "None", // CSRF 방지 설정
+      domain: ".colunch-phi.vercel.app",  // ✅ 프론트엔드 도메인으로 설정
       maxAge: 60 * 60 * 1000, // 1시간 유지
     });
     // ✅ 프론트엔드로 리다이렉트
