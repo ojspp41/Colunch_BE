@@ -17,18 +17,11 @@ router.get(
     // ✅ 프론트엔드 URL (환경변수 사용 추천)
     const FRONTEND_URL = process.env.FRONTEND_URL || "https://colunch-phi.vercel.app";
 
-    // ✅ JWT 토큰을 HTTP-Only 쿠키로 설정
-    res.cookie("accessToken", token, {
-      httpOnly: false,  // 클라이언트에서 JS로 접근 불가능 (보안 강화)
-      secure: true,  // 로컬 개발 환경에서는 false, 배포 환경에서는 true (HTTPS 필요)
-      sameSite: "None", // CSRF 방지 설정
-      domain: ".colunch-phi.vercel.app",  // ✅ 프론트엔드 도메인으로 설정
-      maxAge: 60 * 60 * 1000, // 1시간 유지
-    });
-    // ✅ 프론트엔드로 리다이렉트
-    res.redirect(`${FRONTEND_URL}?isFirstLogin=${isFirstLogin}`);
+    // ✅ 프론트엔드로 accessToken과 isFirstLogin을 URL로 전달
+    res.redirect(`${FRONTEND_URL}?accessToken=${token}&isFirstLogin=${isFirstLogin}`);
   }
 );
+
 // ✅ 유저 정보 반환 (로그인 상태 확인)
 
 
