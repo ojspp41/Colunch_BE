@@ -15,7 +15,7 @@ router.get(
     const { token, isFirstLogin } = req.user;
 
     // ✅ 프론트엔드 URL (환경변수 사용 추천)
-    const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+    const FRONTEND_URL = process.env.FRONTEND_URL || "https://colunch-phi.vercel.app";
 
     // ✅ JWT 토큰을 HTTP-Only 쿠키로 설정
     res.cookie("accessToken", token, {
