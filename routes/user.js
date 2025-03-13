@@ -6,7 +6,32 @@ const User = require("../models/User");
 const router = express.Router();
 
 
+// ✅ 현재 사용자의 isFirstLogin 정보 반환
+router.get("/is-first-login", verifyToken, async (req, res) => {
+  try {
 
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "유효하지 않은 토큰입니다." });
+    }
+
+    const userId = req.user.id;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "잘못된 유저 ID입니다." });
+    }
+
+    const user = await User.findById(userId).select("isFirstLogin");
+
+    if (!user) {
+      return res.status(404).json({ message: "유저를 찾을 수 없습니다." });
+    }
+
+    res.json({ isFirstLogin: user.isFirstLogin });
+  } catch (error) {
+    console.error("❌ isFirstLogin 조회 에러:", error);
+    res.status(500).json({ message: "서버 오류가 발생했습니다." });
+  }
+});
 
 router.post("/signup", verifyToken, async (req, res) => {
   try {
