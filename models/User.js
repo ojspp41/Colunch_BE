@@ -14,6 +14,8 @@ const UserSchema = new mongoose.Schema({
     isFirstLogin: { type: Boolean, default: true },
     isFirstMatch: { type: Boolean, default: true }, // ✅ 첫 매칭 가능 여부 추가
     matchedUsers: { type: [mongoose.Schema.Types.ObjectId], ref: "User", default: [] }, // 매칭된 유저 리스트
+    
+
 });
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
