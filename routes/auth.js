@@ -15,7 +15,7 @@ router.get(
     const { token, isFirstLogin } = req.user;
 
     // ✅ 프론트엔드 URL (환경변수 사용 추천)
-    const FRONTEND_URL = process.env.FRONTEND_URL || "https://colunch-phi.vercel.app";
+    const FRONTEND_URL = process.env.FRONTEND_URL || "https://colunch-nine.vercel.app";
 
     // ✅ 프론트엔드로 accessToken과 isFirstLogin을 URL로 전달
     res.redirect(`${FRONTEND_URL}?accessToken=${token}&isFirstLogin=${isFirstLogin}`);

@@ -12,7 +12,7 @@ const app = express();
 connectDB();
 
 // ✅ 미들웨어 설정
-app.use(cors({ origin: "https://colunch-phi.vercel.app", credentials: true }));
+app.use(cors({ origin: "https://colunch-nine.vercel.app", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
