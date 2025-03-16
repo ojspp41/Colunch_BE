@@ -29,7 +29,6 @@ app.use(passport.session());
 app.use("/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/user"));
 app.use("/api/participations", require("./routes/participations")); // ✅ 추가된 라우트
-
 app.use("/api/matching", require("./routes/matching")); // ✅ 매칭 라우트 추가
 // ✅ 서버 실행
 const PORT = process.env.PORT || 5000;
