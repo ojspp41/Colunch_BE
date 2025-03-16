@@ -12,7 +12,7 @@ const app = express();
 connectDB();
 
 // ✅ 미들웨어 설정
-app.use(cors({ origin: "http://localhost:5174", credentials: true }));
+app.use(cors({ origin: "https://colunch-phi.vercel.app", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -29,7 +29,6 @@ app.use(passport.session());
 app.use("/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/user"));
 app.use("/api/participations", require("./routes/participations")); // ✅ 추가된 라우트
-app.use("/api/qr", require("./routes/qr")); // ✅ 추가된 라우트
 app.use("/api/matching", require("./routes/matching")); // ✅ 매칭 라우트 추가
 // ✅ 서버 실행
 const PORT = process.env.PORT || 5000;
