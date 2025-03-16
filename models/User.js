@@ -14,6 +14,9 @@ const UserSchema = new mongoose.Schema({
     isFirstLogin: { type: Boolean, default: true },
     isFirstMatch: { type: Boolean, default: true }, // ✅ 첫 매칭 가능 여부 추가
     matchedUsers: { type: [mongoose.Schema.Types.ObjectId], ref: "User", default: [] }, // 매칭된 유저 리스트
+    /** ✅ QR 인증 여부 필드 추가 */
+    isQrVerified: { type: Boolean, default: false },
+
 });
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
