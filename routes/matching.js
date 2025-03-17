@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require("../models/User"); // User 모델
 const { verifyToken } = require("../config/jwt"); // ✅ JWT 검증 미들웨어 사용
 
-// ✅ 매칭 요청 엔드포인트
 router.get("/", verifyToken, async (req, res) => {
   try {
     const userId = req.user.id; // verifyToken 미들웨어에서 설정된 사용자 ID
@@ -15,11 +14,23 @@ router.get("/", verifyToken, async (req, res) => {
     // 이미 매칭된 사용자 제외
     const matchedUserIds = user.matchedUsers.map(id => id.toString());
 
-    // 필터링 조건
+    // 필터링 조건 (학번 → 나이 → 전공 순서 + 학번 필드 반드시 존재)
     const filterConditions = [
-      { _id: { $ne: userId, $nin: matchedUserIds }, admissionYear: user.admissionYear },
-      { _id: { $ne: userId, $nin: matchedUserIds }, age: user.age },
-      { _id: { $ne: userId, $nin: matchedUserIds } }
+      { 
+        _id: { $ne: userId, $nin: matchedUserIds },
+        admissionYear: user.admissionYear,
+        "admissionYear": { $exists: true, $ne: null }
+      },
+      { 
+        _id: { $ne: userId, $nin: matchedUserIds },
+        age: user.age,
+        "admissionYear": { $exists: true, $ne: null }
+      },
+      { 
+        _id: { $ne: userId, $nin: matchedUserIds },
+        major: user.major,
+        "admissionYear": { $exists: true, $ne: null }
+      }
     ];
 
     let match = null;
@@ -37,12 +48,11 @@ router.get("/", verifyToken, async (req, res) => {
     // 매칭된 사용자의 ID를 matchedUsers에 추가
     user.matchedUsers.push(match._id);
 
-    // ✅ 첫 매칭 여부(isFirstMatch) 업데이트
+    // 첫 매칭 여부(isFirstMatch) 업데이트
     if (user.isFirstMatch) {
       user.isFirstMatch = false;
     }
 
-    
     await user.save();
 
     // 응답
@@ -66,6 +76,7 @@ router.get("/", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // ✅ 매칭된 유저 정보 반환 API
 router.get("/matched-users", verifyToken, async (req, res) => {
