@@ -23,7 +23,8 @@ router.get("/", verifyToken, async (req, res) => {
     // ✅ 2. 학번 같은 사람이 없다면 전체에서 매칭된 사람 제외하고 찾기
     if (potentialMatches.length === 0) {
       potentialMatches = await User.find({
-        _id: { $ne: userId, $nin: matchedUserIds }
+        _id: { $ne: userId, $nin: matchedUserIds },
+        admissionYear: { $nin: [null, ""] }
       });
     }
 
