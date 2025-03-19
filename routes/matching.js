@@ -6,44 +6,69 @@ const { verifyToken } = require("../config/jwt"); // ✅ JWT 검증 미들웨어
 // ✅ 매칭 요청 엔드포인트
 router.get("/", verifyToken, async (req, res) => {
   try {
-    const userId = req.user.id; // verifyToken 미들웨어에서 설정된 사용자 ID
+    const userId = req.user.id; // 사용자 ID
 
-    // 현재 사용자 정보 가져오기
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // 이미 매칭된 사용자 제외
     const matchedUserIds = user.matchedUsers.map(id => id.toString());
 
-    // 필터링 조건
-    const filterConditions = [
-      { _id: { $ne: userId, $nin: matchedUserIds }, admissionYear: user.admissionYear },
-      { _id: { $ne: userId, $nin: matchedUserIds }, age: user.age },
-      { _id: { $ne: userId, $nin: matchedUserIds } }
-    ];
+    let potentialMatches = [];
 
-    let match = null;
-    
-    for (const condition of filterConditions) {
-      match = await User.findOne(condition);
-      if (match) break; // 매칭이 되면 반복 종료
+    // ✅ 1. 학번 같은 사람 중 매칭된 사람 제외하고 찾기
+    potentialMatches = await User.find({
+      _id: { $ne: userId, $nin: matchedUserIds },
+      admissionYear: user.admissionYear
+    });
+
+    // ✅ 2. 학번 같은 사람이 없다면 전체에서 매칭된 사람 제외하고 찾기
+    if (potentialMatches.length === 0) {
+      potentialMatches = await User.find({
+        _id: { $ne: userId, $nin: matchedUserIds }
+      });
     }
 
-    // 매칭된 사용자 없으면 응답
-    if (!match) {
+    // 매칭할 사람이 없으면
+    if (potentialMatches.length === 0) {
       return res.status(404).json({ message: "No matching user found" });
     }
 
-    // 매칭된 사용자의 ID를 matchedUsers에 추가
+    // ✅ 3. 랜덤으로 한 명 선택
+    const randomIndex = Math.floor(Math.random() * potentialMatches.length);
+    const match = potentialMatches[randomIndex];
+
+    // matchedUsers에 추가
     user.matchedUsers.push(match._id);
 
-    // ✅ 첫 매칭 여부(isFirstMatch) 업데이트
+    // 첫 매칭 여부 처리
     if (user.isFirstMatch) {
       user.isFirstMatch = false;
     }
 
-    
     await user.save();
+
+    res.json({
+      message: "Matching successful",
+      matchedUser: {
+        _id: match._id,
+        admissionYear: match.admissionYear,
+        age: match.age,
+        comment: match.comment,
+        contactFrequency: match.contactFrequency,
+        contact_id: match.contact_id,
+        hobby: match.hobby,
+        major: match.major,
+        mbti: match.mbti,
+        song: match.song,
+      },
+    });
+
+  } catch (error) {
+    console.error("Matching Error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
     // 응답
     res.json({
